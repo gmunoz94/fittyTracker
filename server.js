@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/tracker", {
 });
 
 // routes
-app.use(require(routes));
+app.use(routes);
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}`);
