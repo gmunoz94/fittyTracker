@@ -24,6 +24,17 @@ router.get("/workouts", async ({ body }, res) => {
     }
 });
 
+router.get("/workouts/range", async ({ body }, res) => {
+    try {
+        const workoutData = await workout.find({})
+
+        console.log(workoutData)
+        res.json(workoutData);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
 router.put("/workouts/:id", async ({ body, params }, res) => { 
     try {
         const workoutData = await workout.findOneAndUpdate({ '_id': params.id }, {"$push": {exercises: body}})
