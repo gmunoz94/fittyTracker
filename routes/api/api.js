@@ -1,8 +1,6 @@
 const router = require("express").Router();
 const workout = require("../../models/workout");
 
-const urlParams = new URL(document.location).searchParams
-var search = urlParams.get('id')
 
 router.post("/workouts", async ({ body }, res) => {
     try {
@@ -26,10 +24,15 @@ router.get("/workouts", async ({ body }, res) => {
     }
 });
 
-router.put(`/workouts/${search}`, async ({ body }, res) => {
+router.put("/workouts/:id", async ({ body, params }, res) => { 
+
     try {
-        const workoutData = await workout.findOneAndUpdate({})
+        const workoutData = await workout.findOneAndUpdate({ '_id': params.id }, {"$push": {exercises: body}})
+        
+        console.log(workoutData)
+        res.json(workoutData);
     } catch (err) {
+        console.log(err)
         res.status(500).json(err);
     }
 })
